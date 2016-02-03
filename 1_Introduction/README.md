@@ -3,7 +3,7 @@
 ##JavaScriptとは？
 オブジェクト指向のインタプリンタ型プログラミング言語。
 
-**JavaScriptとJavaは全くの別物**
+**JavaScriptとJavaは全くの別物。**
 当時、Javaが流行っていたため、ビジネス的戦略のため名前に似せただけ。
 LiveScript→JavaScriptに改名。
 
