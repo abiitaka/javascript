@@ -1,1 +1,3 @@
-# JavaScript Core 技術
+# JavaScriptのコア技術
+
+* [文法]()
