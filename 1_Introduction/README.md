@@ -8,15 +8,15 @@
 LiveScript→JavaScriptに改名。
 
 ##ECMAScriptとは？
-JavaScriptは、ECMA（European Computer Manufacturer's Association）によって標準化された。
+ECMAScriptとは、ECMA（European Computer Manufacturer's Association）がJavaScriptを標準化したもの。
 ECMA-262標準では、JavaScriptの正式名称をECMAScriptと呼ぶ。
 
 ##JavaScriptとECMAScriptのバージョン
 今回、勉強する各スクリプトのバージョンは、以下の通り。
 
 * JavaScript1.6
-* ECMASCript5 (以降、ES5)
-* ECMASCript for XML (以降、E4X)
+* ECMAScript5 (以降、ES5)
+* ECMAScript for XML (以降、E4X)
 
 ##ツール
 以下を利用する。
