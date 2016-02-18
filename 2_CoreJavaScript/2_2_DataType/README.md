@@ -89,15 +89,74 @@ console.debug(str + "st");  // 文字列連結
 
 ### 4. 真偽値リテラル
 
+```
+
+var isBool;
+
+isBool = true;
+console.debug(isBool); // true
+
+isBool = false;
+console.debug(isBool); // true
+
+isBool = false;
+console.debug(isBool == false); // 比較結果true
+
+```
 
 ### 5. 配列リテラル
 
+```
+var a = new Array();
+a[0] = 10;         // 数値
+a[1] = 'test1';    // 文字列（シングルクォーテーション）
+a[2] = "test2";    // 文字列（ダブルクォーテーション）
+a[3] = true;       // 論理値
+a[4] = {x:0, y:1}; // オブジェクト
+
+console.debug(a);
+
+var b = new Array(10, 'test1', "test2", true, {x:0, y:1});
+console.debug(b); //コンストラクタのパラメータに指定できる
+
+var c = [10, 'test1', "test2", true, {x:0, y:1}];
+console.debug(c); // 配列リテラル
+
+var c = [10, , , , {x:0, y:1}];
+console.debug(c); // 配列リテラル（空行）
+
+```
 
 ### 6. オブジェクトリテラル
 
+```
+
+var point = {x:0, y:1};
+console.debug(point); // x:0, y:1
+
+var rect = {
+  topleft:{x:0, y:0},
+  topright:{x:10, y:0},
+  bottomleft:{x:10, y:0},
+  bottomright:{x:10, y:10}
+};
+console.debug(rect); // オブジェクトの入れ子
+
+```
 
 ### 7. 関数リテラル
 
+```
+
+function square(x) {
+  return x*x;
+}
+console.debug(square(2)); // 関数結果 4
+
+var square2 = function(x){ return x*x; }
+console.debug(square2(3)); // 関数結果 9
+
+```
 
 
 ## 特別な値
