@@ -5,6 +5,8 @@
 * 数値
 * 文字列
 * 論理値
+* null
+* undefined
 
 ## オブジェクト型
 
@@ -16,7 +18,7 @@
 
 ## リテラル
 
-JavaScriptの中で直接記述することができる値のことをリテラルという。
+JavaScriptの中で直接記述することができる値のことをリテラルと呼ぶ。
 リテラルには、以下がある。
 
 1. 整数リテラル
@@ -45,7 +47,6 @@ num=0377;
 console.debug(num);  // 8進数　ブラウザによって0始まりを無視するので8進数は使わない方がいい。
 
 ```
-
 ### 2. 浮動少数点リテラル
 
 ```
@@ -90,7 +91,6 @@ console.debug(str + "st");  // 文字列連結
 ### 4. 真偽値リテラル
 
 ```
-
 var isBool;
 
 isBool = true;
@@ -98,9 +98,6 @@ console.debug(isBool); // true
 
 isBool = false;
 console.debug(isBool); // true
-
-isBool = false;
-console.debug(isBool == false); // 比較結果true
 
 ```
 
@@ -130,7 +127,6 @@ console.debug(c); // 配列リテラル（空行）
 ### 6. オブジェクトリテラル
 
 ```
-
 var point = {x:0, y:1};
 console.debug(point); // x:0, y:1
 
@@ -154,7 +150,7 @@ function square(x) {
 console.debug(square(2)); // 関数結果 4
 
 var square2 = function(x){ return x*x; }
-console.debug(square2(3)); // 関数結果 9
+console.debug(square2(3)); // 関数リテラル 関数結果 9
 
 ```
 
@@ -164,7 +160,38 @@ console.debug(square2(3)); // 関数結果 9
 JavaScriptでは特別なデータ値がある。
 
 * null
-* undefine
+* undefined
+
+### null
+
+「値」がないことを表す特別な値。
+
+JavaScriptでは、nullはオブジェクトが存在しないことを表す値である。また、プリミティブ型の一つである。
+
+### undefined
+
+undefinedは、グローバルオブジェクトのプロパティであり、ndefined変数の初期値は、プリミティブ値のundefinedである。
+
+宣言されている値が、設定されていない変数、存在しないオブジェクトのプロパティを使うとundefinedが返却される。
+
+**nullとは異なる値。**
+
+### nullとundefined
+
+```
+var a
+a = null;
+console.debug(a); // null
+console.debug(typeof null); // 型比較では、obuject。nullに本来はなるはず。ECMAScriptのバグ
+
+var b;
+console.debug(b); // 宣言だけの場合、undefined
+console.debug(typeof undefied); // 型比較では、undefined
+
+console.debug(null === undefined); //　同値演算では、false
+console.debug(null == undefined); //　等値演算では、true
+
+```
 
 ## データ変換
 
