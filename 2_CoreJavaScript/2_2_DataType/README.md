@@ -143,7 +143,6 @@ console.debug(rect); // オブジェクトの入れ子
 ### 7. 関数リテラル
 
 ```
-
 function square(x) {
   return x*x;
 }
@@ -170,7 +169,7 @@ JavaScriptでは、nullはオブジェクトが存在しないことを表す値
 
 ### undefined
 
-undefinedは、グローバルオブジェクトのプロパティであり、ndefined変数の初期値は、プリミティブ値のundefinedである。
+undefinedは、グローバルオブジェクトのプロパティであり、undefined変数の初期値は、プリミティブ値のundefinedである。
 
 宣言されている値が、設定されていない変数、存在しないオブジェクトのプロパティを使うとundefinedが返却される。
 
@@ -182,7 +181,7 @@ undefinedは、グローバルオブジェクトのプロパティであり、nd
 var a
 a = null;
 console.debug(a); // null
-console.debug(typeof null); // 型比較では、obuject。nullに本来はなるはず。ECMAScriptのバグ
+console.debug(typeof null); // 型比較では、obuject。nullではない？不明。
 
 var b;
 console.debug(b); // 宣言だけの場合、undefined
@@ -194,5 +193,6 @@ console.debug(null == undefined); //　等値演算では、true
 ```
 
 ## データ変換
+
 
 *
