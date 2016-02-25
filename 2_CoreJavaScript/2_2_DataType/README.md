@@ -192,7 +192,57 @@ console.debug(null == undefined); //　等値演算では、true
 
 ```
 
+## 特殊文字
+
+* 特殊文字
+* 文字のエスケープ
+
+### 1. 特殊文字
+
+```
+console.debug("\0"); // ヌル文字
+console.debug("\b"); // バックスペース
+console.debug("\f"); // 改ページ
+console.debug("\n"); // 改行
+console.debug("\r"); // 復帰
+console.debug("\v"); // 垂直タブ
+console.debug("\'"); // シングルクォーテーション
+console.debug("\""); // ダブルクォーテーション
+console.debug("\\"); // バックスラッシュ
+console.debug("\255"); // 8進数
+console.debug("\xFF"); // 16進数
+console.debug("\FFFF"); //  unicodeの16進数
+
+```
+
+### 2. エスケープ
+
+""の中で"を利用したい場合は、/を使うと"を文字列として利用できる。
+
+※ 'や/でも同じ。
+
+## 基本データ型とラッパーオブジェクト
+
+文字列は、基本型なのか？オブジェクトなのか？
+
+**JavaScriptでは、基本型。**
+
+```
+var s = "test";
+console.debug(typeof s);      // String
+console.debug(typeof "test"); // String
+
+var p = {x:0,y:0}
+console.debug(typeof p);      // Object
+
+var ss = new String("test");
+console.debug(typeof ss);     // Object
+
+console.debug(typeof (ss +"!")); // String
+
+var os = new Object("test");
+console.debug(os);            // String["t", "e", "s", "t"]
+
+```
+
 ## データ変換
-
-
-*
