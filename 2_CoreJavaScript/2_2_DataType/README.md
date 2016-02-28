@@ -245,4 +245,80 @@ console.debug(os);            // String["t", "e", "s", "t"]
 
 ```
 
-## データ変換
+## 型変換
+
+```
+var a; // undifined
+console.debug(new String(a)); // "undefined"
+console.debug(new Number(a)); // Nan
+console.debug(new Boolean(a)); // false
+
+var b = null; // null
+console.debug(new String(b)); // "null"
+console.debug(new Number(b)); // 0
+console.debug(new Boolean(b)); // false
+
+var c = 0; // 0
+console.debug(new String(c)); // "0"
+console.debug(new Number(c)); // 0
+console.debug(new Boolean(c)); // false
+
+var d = 0/0; // Nan
+console.debug(new String(d)); // "Nan"
+console.debug(new Number(d)); // 0
+console.debug(new Boolean(d)); // false
+
+var e = true;
+console.debug(new String(e)); // "true"
+console.debug(new Number(e)); // 1
+console.debug(new Boolean(e)); // true
+
+var f = false
+console.debug(new String(f)); // "false"
+console.debug(new Number(f)); // 0
+console.debug(new Boolean(f)); // false
+
+```
+
+## 基本型と参照型
+
+値によるコピー、渡し、比較処理
+```
+var n=1;
+var m=n;
+
+function add_to_total(total, x) {
+  total = total + x;
+}
+
+add_to_total(n, m);
+
+if(n==1) {
+  m=2;
+}
+
+console.debug(m);　// 2
+
+```
+
+参照によるコピー、渡し、比較処理
+```
+var xms = new Date(2016, 11, 25);
+var solstice = xms;
+
+solstice.setDate(21);
+console.debug(xms.getDate()); // 21
+
+function add_to_totals(totals, x) {
+  totals[0] = totals[0] +x;
+  totals[1] = totals[1] +x;
+  totals[2] = totals[2] +x;  
+}
+
+console.debug(xms == solstice);  // true
+
+var xms = new Date(2016, 11, 25);
+var solstice_plus_4 = new Date(2016,11,25);
+
+console.debug(xms != solstice_plus_4); //  true
+```
