@@ -181,7 +181,7 @@ undefinedは、グローバルオブジェクトのプロパティであり、un
 var a
 a = null;
 console.debug(a); // null
-console.debug(typeof null); // 型比較では、obuject。nullではない？不明。
+console.debug(typeof null); // 型比較では、obuject。nプリミティブ型ではない？不明。
 
 var b;
 console.debug(b); // 宣言だけの場合、undefined
@@ -308,17 +308,6 @@ var solstice = xms;
 
 solstice.setDate(21);
 console.debug(xms.getDate()); // 21
-
-function add_to_totals(totals, x) {
-  totals[0] = totals[0] +x;
-  totals[1] = totals[1] +x;
-  totals[2] = totals[2] +x;  
-}
-
 console.debug(xms == solstice);  // true
 
-var xms = new Date(2016, 11, 25);
-var solstice_plus_4 = new Date(2016,11,25);
-
-console.debug(xms != solstice_plus_4); //  true
 ```
