@@ -49,6 +49,8 @@ a=0;b=0;
 * let (ES6)
 * const (ES6)
 
+JavaScriptは、変数に型を意識しない。
+
 #### var
 
 JavaScriptは型に厳密ではないため、varを利用すれば数値、文字列、真偽値等、どの型であってもvarで宣言できる。
@@ -122,11 +124,74 @@ console.debug(z + 1) // 0 + 1 = 1
 
 ### 3. 変数のスコープ
 
-* グローバルスコープ
 * ローカルスコープ
+* グローバルスコープ
 
-グローバルスコープは、どこからでも利用できるスコープ。
 ローカルスコープは、局所的な箇所でしか利用できないスコープ。
+グローバルスコープは、どこからでも利用できるスコープ。
+
+EM5までは、ブロックレベルのスコープはない。最小単位は、関数内で有効になる。
+EM6から一部のブラウザで利用できるlet変数がある。
+
+```
+// ローカル変数の確認
+var s = "global";
+
+function check() {
+  var s = "local";
+  console.debug(s); // local
+}
+
+check();
+
+```
+
+```
+// グローバル変数の確認
+s = "global";
+
+function check() {
+  s = "local";
+  console.debug(s); // local
+
+  m = "mylocal";
+  console.debug(m); // mylocal
+}
+
+check();
+console.debug(s); // local
+console.debug(m); // mylocal
+
+// グローバル変数でもvarをつける
+var s = "global";
+
+function check() {
+  var s = "local";
+  console.debug(s); // local
+
+  var m = "mylocal";
+  console.debug(m); // mylocal
+}
+
+check();
+console.debug(s); // global
+console.debug(m); // mylocal
+
+```
+
+```
+// ブロックレベルのスコープはない
+var scope = "global";
+
+function f() {
+  console.debug(scope); // globalではなく、undefinedが表示される。これは関数内のscope変数がまだ宣言されてないからである。
+  var scope = "local";
+  console.debug(scope); // local
+}
+
+f();
+
+```
 
 ### 4. 変数の巻き上げ
 
