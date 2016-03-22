@@ -61,10 +61,10 @@ var b = 2;
 var c = 3;
 
 x = a + b * c;
-console.debug(x);
+console.debug(x); // 7
 
 y = (a + b) * c;
-console.debug(y);
+console.debug(y); // 9
 
 ```
 
@@ -290,11 +290,11 @@ console.debug(d instanceof Number); // false
 console.debug("test" + "1"); //test1
 
 // 文字列の比較演算子
-console.debug(1   + 2);    // 3
+console.debug(1 + 2);      // 3
 console.debug("1" + "2");  // 12
 console.debug("1" + 2);    // 12
 
-console.debug(11   < 1);   // false
+console.debug(11 < 1);     // false
 console.debug("11" < "3"); // true unicodeのアルファベット順に比較される
 console.debug("11" < 3);   // 11が数値に変換されるため数値比較になる、false
 console.debug("a" < 3);    // aが数値に変換されNaNになるため、false
@@ -303,13 +303,72 @@ console.debug("a" < 3);    // aが数値に変換されNaNになるため、fals
 
 ## ビット演算子
 
+**ほぼ利用しないので割愛。**
+
+
 ## 論理演算子
 
 1. 論理積演算子
 * 論理和演算子
 * 論理否定演算子
 
+```
+// 論理演算子
+
+var a = 1;
+var b = 2;
+var c = 3;
+var d = 4;
+
+function stop() {
+  console.debug("stop.");
+  return true;
+}
+
+// 論理積演算子 &&
+console.debug(a == 1 && b ==2) // true
+console.debug(a == 1 && b ==3) // false
+
+console.debug(a == 1 && stop()) // true, stop.
+console.debug(a == 2 && stop()) // false, stopは処理されない。
+
+
+// 論理和演算子 ||
+console.debug(c == 3 || d ==4) // true
+console.debug(c == 3 || d ==5) // true
+
+console.debug(c == 3 || stop()) // true, stop.
+console.debug(c == 2 || stop()) // true, stopは処理されない。
+
+```
+
+```
+// 論理否定演算子 !
+
+var a = 1;
+var b = 2;
+
+console.debug(a == 1); // true
+console.debug(a != 1); // false
+
+```
+
 ## 代入演算子
+
+```
+var a = 0; // 0が代入される
+console.debug(a); // 0
+
+var b = 1, c = 2;
+console.debug(b); // 1
+console.debug(c); // 2
+
+c = b = a = 3; // 複数の代入演算子
+console.debug(a); // 3
+console.debug(b); // 3
+console.debug(c); // 3
+
+```
 
 ## その他
 
@@ -321,7 +380,18 @@ console.debug("a" < 3);    // aが数値に変換されNaNになるため、fals
 * カンマ演算子
 
 ```
+// 三項演算子
+
+var i = 1;
+
+console.debug(i == 1 ? true : false); // true
+console.debug(i == 2 ? true : false); // false
+
+```
+
+```
 // typeof 演算子
+
 var n = 1;
 console.debug(typeof n); // number
 
