@@ -376,7 +376,6 @@ console.debug(c); // 3
 * typeof演算子
 * new演算子
 * delete演算子
-* void演算子
 * カンマ演算子
 
 ```
@@ -418,5 +417,41 @@ console.debug(typeof p); // object
 
 var f = function() { var i = 0; };
 console.debug(typeof f); // function
+
+```
+
+```
+// new演算子
+
+// new 演算子は新しいオブジェクトを生成し、そのオブジェクトを初期化するこができる。
+
+var d = new Date(); 引数なしのコンストラクタは本日日付でオブジェクトが初期化される。
+console.debug(d);
+
+```
+
+```
+// delete演算子
+
+// オブジェクトのプロパティを削除する
+
+var position = {x:1, y:2};
+
+console.debug(position);
+
+delete position.x; // xを削除する
+
+console.debug(position);
+
+```
+
+```
+// カンマ演算子
+
+var a = 1, b = 2, c = 3;
+
+console.debug(a); // 1
+console.debug(b); // 2
+console.debug(c); // 3
 
 ```
