@@ -15,7 +15,7 @@
 ### if文
 
 ```
-
+// if
 var a = 1
 if(a == 1) { // true
   console.debug("true");
@@ -210,10 +210,10 @@ function factorial(x) {
 
 ### try...catch文
 
+**catch,finallyはそれぞれ省略できるが、両方共省略することはできない。
+
 ```
 // try/catch/finally文
-
-// catch,finallyはそれぞれ省略できるが、両方共省略することはできない。
 
 try {
   var n = prompt("Please enter a positive integer.", "");
@@ -234,7 +234,6 @@ function factorial(x) {
   console.debug(i);
   return i;
 }
-
 ```
 
 ```
@@ -281,9 +280,12 @@ function getToday() {
 
 getToday();
 
-// functionは厳密には文ではない。動的な振る舞いをするものが文であり、functionは静的な構造である。
-// JavaScriptのコードが解析されコンパイルされると、functionは定義されるだけで実行はされない。
+```
 
+functionは厳密には文ではない。動的な振る舞いをするものが文であり、functionは静的な構造である。
+JavaScriptのコードが解析されコンパイルされると、functionは定義されるだけで実行はされない。
+
+```
 console.debug(addPlus1(1));
 
 function addPlus1(calcVal) {
@@ -294,11 +296,13 @@ function addPlus1(calcVal) {
 
 ## with文
 
-```
-// with文
-
 // 変数名の解決に使用する一連のオブジェクトのリストがスコープチェーン。
 // このスコープチェーンを一時的に変更するときにwith文を使う。
+
+**パフォーマンスや可読性を考慮すると、推奨されない。
+
+```
+// with文
 
 var a, x, y;
 var r = 10;
