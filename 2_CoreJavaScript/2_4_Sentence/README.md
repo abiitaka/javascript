@@ -30,7 +30,6 @@ if(a == 1) { // false
 } else {
   console.debug("false");
 }
-
 ```
 
 ### swtich文
@@ -71,15 +70,13 @@ console.debug(convert("test")); // 'test'
 ## 2.ループ文
 
 * for文
-* do...while文
 * while文
+* do...while文
 * label文
 * break文
 * continue文
 * return文
 * for...in文
-* for...of文
-
 
 ### for文
 
@@ -100,9 +97,42 @@ for(var count=0,i=1,j=1; i<=10; i++,j++) {
 
 ```
 
+### while文
+
+```
+// while
+
+var i = 0;
+while(i < 0) {
+  console.debug("count:" + i); // 条件に一致しない場合は、表示されない
+  i++;
+}
+
+var j = 0;
+while(j < 10) {
+  console.debug("count:" + j);
+  j++;
+}
+```
+
 ### do...while文
 
-### while文
+```
+// do...while
+
+var i = 0;
+do {
+  console.debug("count:" + i); // 必ず1回目は実行される
+  i++;
+} while(i < 0);
+
+var j = 0;
+do {
+  console.debug("count:" + j);
+  j++;
+} while(j < 10);
+
+```
 
 ### label文
 
@@ -174,8 +204,17 @@ isNull(new Date());
 
 ### for...in文
 
-### for...of文
+for...in文は、あるオブジェクトに属するプロパティの全てを調べるときに利用する。
 
+```
+// for in
+
+var a = {x:1, y:2, z:3};
+for(var b in a) {
+  console.debug("a." + b + " = " + a[b] + "  (" + b + ")" );
+}
+
+```
 
 ## 3.エラー文
 
@@ -210,7 +249,7 @@ function factorial(x) {
 
 ### try...catch文
 
-**catch,finallyはそれぞれ省略できるが、両方共省略することはできない。**
+catch,finallyはそれぞれ省略できるが、両方共省略することはできない。
 
 ```
 // try/catch/finally文
@@ -296,8 +335,8 @@ function addPlus1(calcVal) {
 
 ## with文
 
-// 変数名の解決に使用する一連のオブジェクトのリストがスコープチェーン。
-// このスコープチェーンを一時的に変更するときにwith文を使う。
+変数名の解決に使用する一連のオブジェクトのリストがスコープチェーン。
+このスコープチェーンを一時的に変更するときにwith文を使う。
 
 **パフォーマンスや可読性を考慮すると、推奨されない。**
 
