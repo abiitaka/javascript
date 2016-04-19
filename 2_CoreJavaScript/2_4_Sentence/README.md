@@ -296,19 +296,67 @@ while(i < a.length) {
 ### 例外
 
 * ECMAScript例外
-* DOMException
+* DOMException例外
 * DOMERROR
 
-#### ECMAScript例外
-#### DOMException
-#### DOMERROR
+##### ECMAScript例外
 
-## その他
+JavaScriptでは、Erorrオブジェクト以外に7つの中核的なオブジェクトがある。
+
+* Error
+* EvalError
+* InternalError
+* RangeError
+* ReferenceError
+* SyntaxError
+* TypeError
+* URIError
+
+##### DOMException例外
+
+DOMException例外は、メソッドやプロパティを使用した時の例外。
+
+**ブラウザによって実装されていないものがあるため注意すること**
+
+##### DOMError
+
+DOMErrorとエラーの型
+
+|型     |説明|
+|:-----:|:------:|
+|IndexError|許可された範囲内でない|
+|HierarchyRequestError|ノードツリー階層不正|
+|WrongDocumentError|誤ったオブジェクトがある|
+|InvalidCharacterError|不正な文字|
+|NoModificationAllowedError	|オブジェクト修正不可|
+|NotFoundError|オブジェクト未存在|
+|NotSupportedError|命令のアンサポート|
+|InvalidStateError|オブジェクト不正|
+|SyntaxError|文字列ミスマッチ|
+|InvalidModificationError|オブジェクト修正不可|
+|NamespaceError|XML名前空間不許可|
+|InvalidAccessError|引数アンサポート|
+|TypeMismatchError|型ミスマッチ|
+|SecurityError|非安全|
+|NetworkError|ネットワーク失敗|
+|AbortError|命令失敗|
+|URLMismatchError|URLミスマッチ|
+|QuotaExceededError|容量超え|
+|TimeoutError|タイムアウト|
+|InvalidNodeTypeError|ノード不正|
+|DataCloneError|クローン不可|
+
+```
+throw new DOMError(NetworkError);  // Exception: ReferenceError: NetworkError is not defined
+
+```
+
+## 4.その他
 
 * function文
 * with文
 
-## function文
+### function文
 
 ```
 // function文
@@ -333,7 +381,7 @@ function addPlus1(calcVal) {
 
 ```
 
-## with文
+### with文
 
 変数名の解決に使用する一連のオブジェクトのリストがスコープチェーン。
 このスコープチェーンを一時的に変更するときにwith文を使う。
