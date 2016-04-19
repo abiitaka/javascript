@@ -322,8 +322,8 @@ DOMException例外は、メソッドやプロパティを使用した時の例�
 
 DOMErrorとエラーの型
 
-|型     |説明|
-|:-----:|:------:|
+|型|説明|
+|:-----|:------|
 |IndexError|許可された範囲内でない|
 |HierarchyRequestError|ノードツリー階層不正|
 |WrongDocumentError|誤ったオブジェクトがある|
@@ -347,6 +347,8 @@ DOMErrorとエラーの型
 |DataCloneError|クローン不可|
 
 ```
+// DOMError
+
 throw new DOMError(NetworkError);  // Exception: ReferenceError: NetworkError is not defined
 
 ```
