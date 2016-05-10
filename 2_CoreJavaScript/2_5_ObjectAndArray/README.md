@@ -50,6 +50,8 @@ if(p1.x) {  // p1.xがnull、undefinedのでもない場合
 
 ### 連想配列
 
+任意のデータと任意の文字列を動的に関連付けられるようにするデータ構造。
+
 ```
 // 連想配列
 
@@ -58,10 +60,18 @@ for (var i=0; i<4; i++) {
   console.debug(customer["address" + i]);
 }
 
+// 実行結果
+// 0
+// 1
+// 2
+// 3
+```
+
+```
 // 連想配列の使い方
 
 var portfolio = {mitubishi:250};
-console.debug(portfolio);
+console.debug(portfolio); // Object { mitubishi: 250 }
 
 portfolio["panasonic"] = 150; // 連想配列にすると文字列でプロパティを動的に作成できる。
 portfolio["xaomi"] = 1000;
@@ -69,6 +79,11 @@ portfolio["xaomi"] = 1000;
 for(stock in portfolio) { // 動的に作成されたプロパティは for...in を利用して取得する。
   console.debug("portfolio." + stock + ":" + portfolio[stock]);
 }
+
+// 実行結果
+// portfolio.mitubishi:250
+// portfolio.panasonic:150
+// portfolio.xaomi:1000
 ```
 
 ### Objectクラス
