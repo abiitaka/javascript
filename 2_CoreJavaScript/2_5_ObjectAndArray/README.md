@@ -304,4 +304,18 @@ arrays.size = 7;
 for(p in arrays) {
   console.debug("arrays." + p + "=" + arrays[p]);
 }
+
+// 実行結果
+// arrays.0=0
+// arrays.1=1
+// arrays.2=2
+// arrays.3=3
+// arrays.4=4
+// arrays.5=5
+// arrays.6=6
+// arrays.7=7
+// arrays.8=8
+// arrays.9=9
+// arrays.length=7
+// arrays.size=7
 ```
