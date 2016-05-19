@@ -2,11 +2,56 @@
 
 ### オブジェクト
 
+#### オブジェクトの生成とアクセス
+
+JavaScriptにおけるオブジェクトの概念は、現実世界に実在する「もの」との対比で解釈される。
+
+オブジェクトは、プロパティと型をもつ独立した存在である。
+
 ```
 // オブジェクト生成
+var car1 = new Object();
+car1.make = "toyota";
+car1.model = "エスクァイア";
+console.debug(car1); // Object { make: "toyota", model: "エスクァイア" }
 
-var a = {};
-console.debug(a);
+// オブジェクト初期化子を使ってオブジェクト生成
+var car2 = {make : "toyota", model : "エスクァイア"};
+console.debug(car2); // Object { make: "toyota", model: "エスクァイア" }
+
+```
+
+```
+// コンストラクタの利用
+var car3 = new Car("toyota", "ベルファイア");
+console.debug(car3); // Object { make: "toyota", model: "ベルファイア" }
+
+var car4 = new Car("NISSAN", "キューブ");
+console.debug(car4); // Object { make: "NISSAN", model: "キューブ" }
+
+function Car(make, model) {
+  this.make = make;
+  this.model = model;
+}
+```
+
+```
+// プロパティへのアクセス
+
+var car2 = {make : "toyota", model : "エスクァイア"};
+
+car2.make = "ISUZU";
+console.debug(car2.make); // ISUZU
+
+car2["make"] = "GM"; // 連想配列でプロパティにアクセス
+console.debug(car2.make); // GM
+
+var property = "make";
+car2[property] = "NISSAN"; // 変数を使ってプロパティにアクセス
+console.debug(car2.make); // NISSAN
+```
+```
+// オブジェクトの入れ子
 
 var p1 = {x:1, y:1};
 console.debug(p1);
@@ -14,18 +59,15 @@ console.debug(p1);
 var p2 = {x:2, y:2};
 var line =  {p1, p2};
 console.debug(line);
-```
 
-```
-// プロパティ
-
-p1.x = 3; // 設定
+p1.x = 3;
 console.debug(p1);
 
 line.p1.x = 5;
 console.debug("line.p1.x:" + line.p1);
+```
 
-
+```
 // プロパティの存在確認（全部）
 
 for(var obj in line) {
@@ -47,46 +89,76 @@ if(p1.x) {  // p1.xがnull、undefinedのでもない場合
 }
 ```
 
-
-### 連想配列
-
-任意のデータと任意の文字列を動的に関連付けられるようにするデータ構造。
+#### オブジェクトのメソッド定義
 
 ```
-// 連想配列
+// メソッド定義
 
-var customer = {address0:0, address1:1, address2:2, address3:3};
-for (var i=0; i<4; i++) {
-  console.debug(customer["address" + i]);
+var car5 = new Car("NISSAN", "キューブ");
+car5.toCar(); // Object { make: "NISSAN", model: "キューブ" }
+
+function Car(make, model) {
+  this.make = make;
+  this.model = model;
+  this.toCar = toCar; // ここがポイント。carオブジェクトにtoCarメソッドを定義する
 }
 
-// 実行結果
-// 0
-// 1
-// 2
-// 3
-```
-
-```
-// 連想配列の使い方
-
-var portfolio = {mitubishi:250};
-console.debug(portfolio); // Object { mitubishi: 250 }
-
-portfolio["panasonic"] = 150; // 連想配列にすると文字列でプロパティを動的に作成できる。
-portfolio["xaomi"] = 1000;
-
-for(stock in portfolio) { // 動的に作成されたプロパティは for...in を利用して取得する。
-  console.debug("portfolio." + stock + ":" + portfolio[stock]);
+function toCar() {
+  // thisを使って、オブジェクトのプロパティを表示する。
+  console.log("make:" + this.make + ", model:" + this.model);
 }
-
-// 実行結果
-// portfolio.mitubishi:250
-// portfolio.panasonic:150
-// portfolio.xaomi:1000
 ```
 
-### Objectクラス
+#### オブジェクトのGetter、Setter
+
+```
+// Getter、Setter
+
+// オブジェクト初期化子による定義
+var position = {
+  x:1,
+  y:2,
+  get xy() {
+    return [this.x, this.y];
+  },
+  set xx(p) {
+    this.x = p;
+  },
+  set yy(p) {
+    this.y = p;
+  }
+};
+
+console.debug(position.xy); // Array [ 1, 2 ]
+position.xx = 10;
+position.yy = 20;
+console.debug(position.xy); // Array [ 10, 20 ]
+```
+
+```
+// 生成済みのオブジェクトに追加する
+
+var p = {x: 1, y:2};
+
+Object.defineProperties(p, {
+  "xy" : { get: function() {
+    return [this.x, this.y];
+  }},
+  "xx" : { set: function(x) {
+    this.x = x;
+  }},
+  "yy" : { set: function(y) {
+    this.y = y;
+  }}
+});
+
+console.debug(p.xy); // Array [ 1, 2 ]
+p.xx = 10;
+p.yy = 20;
+console.debug(p.xy); // Array [ 10, 20 ]
+```
+
+#### Objectクラス
 
 JavaScriptのすべてのオブジェクトは、Objectクラスを継承している。
 
@@ -158,19 +230,59 @@ console.debug(d.propertyIsEnumerable("x")); // true
 console.debug(d.propertyIsEnumerable("toString")); // false
 ```
 
+### 連想配列
+
+任意のデータと任意の文字列を動的に関連付けられるようにするデータ構造。
+
+```
+// 連想配列
+
+var customer = {address0:0, address1:1, address2:2, address3:3};
+for (var i=0; i<4; i++) {
+  console.debug(customer["address" + i]);
+}
+
+// 実行結果
+// 0
+// 1
+// 2
+// 3
+```
+
+```
+// 連想配列の使い方
+
+var portfolio = {mitubishi:250};
+console.debug(portfolio); // Object { mitubishi: 250 }
+
+portfolio["panasonic"] = 150; // 連想配列にすると文字列でプロパティを動的に作成できる。
+portfolio["xaomi"] = 1000;
+
+for(stock in portfolio) { // 動的に作成されたプロパティは for...in を利用して取得する。
+  console.debug("portfolio." + stock + ":" + portfolio[stock]);
+}
+
+// 実行結果
+// portfolio.mitubishi:250
+// portfolio.panasonic:150
+// portfolio.xaomi:1000
+```
+
 ### 配列
+
+#### 配列の生成とアクセス
 
 ```
 // 初期化
 
-var nums = [1, 2, 3, 4, 5, null];
+var nums = [1, 2, 3, 4, 5, null]; // 配列初期化
 console.debug(nums); // Array [ 1, 2, 3, 4, 5, null ]
 
 var a = 1;
 var aa = [a, a+10, a+20, a+30, undefined];
 console.debug(aa); // Array [ 1, 11, 21, 31, undefined ]
 
-var b = new Array(5, 4, 3, 2, 1);
+var b = new Array(5, 4, 3, 2, 1); // Arrayオブジェクト
 console.debug(b); // Array [ 5, 4, 3, 2, 1 ]
 ```
 
@@ -208,9 +320,64 @@ console.debug(arrays);  // Array [ 111, "2", 3, "test" ]
 console.debug(arrays.length); // 4
 arrays[50] = 0;
 console.debug(arrays.length); // 51 最大のインデックスをベースに長さが決まる
+
+
+// lengthを使って、配列を切り捨てる
+
+var dogs = ["taro", "jiro", "shiro"];
+console.debug(dogs.length); // 3
+console.debug(dogs); Array // [ "taro", "jiro", "shiro" ]
+
+dogs.length = 0;
+console.debug(dogs.length); // 0
+console.debug(dogs); Array // [ ]
+
 ```
 
-### 配列のメソッド
+#### 配列の繰り返し
+
+```
+var dogs = ["taro", "jiro", "shiro"];
+
+// for
+for (var i = 0; i< dogs.length; i++) {
+  console.debug(dogs[i]);
+}
+
+// 実行結果
+// taro
+// jiro
+// shiro
+
+
+// forEach
+
+dogs.forEach(function(dog) {
+  console.debug(dog);
+});
+
+// 実行結果
+// taro
+// jiro
+// shiro
+
+// 値が張り当てられていない要素は、forEachで反復されない
+
+dogs[5] = "jyon"
+console.debug(dogs); // Array [ "taro", "jiro", "shiro", <2 個の空行>, "jyon" ]
+
+dogs.forEach(function(dog) {
+  console.debug(dog);
+});
+
+// 実行結果
+// taro
+// jiro
+// shiro
+// jyon
+
+```
+#### 配列のメソッド
 
 ```
 // join
