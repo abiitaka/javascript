@@ -94,14 +94,14 @@ argumentsプロパティでアクセスする。
 
 function f(a, b) {
   console.debug(arguments.length);
-    console.debug(arguments[0]);
-    console.debug(arguments[1]);
-  }
+  console.debug(arguments[0]);
+  console.debug(arguments[1]);
 }
 
 f(1,2);
 
 // 実行結果　
+// 2
 // 1
 // 2
 ```
@@ -132,9 +132,129 @@ max(100, 1); // 100
 オブジェクトリテラルを使えば、名前／値のペアを関数に渡すことができる。
 
 ```
-var
+function getXAndY(p) {
+  return [p.x, p.y];
+}
+
+var p = {x:1, y:1, z:1};
+console.debug(getXAndY(p)); // Array [ 1, 1 ]
+```
+
+#### 引数の型
+
+JavaScriptは型付きが弱い言語である。  
+そのため、関数定義時には引数の型を宣言することができない。
+保守性やメンテナンス性を考慮すると、引数の型がどの型なのかわかるようにコメントで記載するとよい。
 
 ```
+// 引数にコメントを付ける場合
+
+function arraycopy(/* Array */from , /* Array */to, /* int 省略可 */from_start, /* int 省略可 */from_end, /* int 省略可 */length) {
+  console.debug(from instanceof Array); // true
+  console.debug(to instanceof Array); // true
+  console.debug(typeof from_start); // number
+  console.debug(typeof from_end); // number
+  console.debug(typeof length); // number
+  return;
+}
+
+var from = [1, 2, 3];
+var to   = [];
+arraycopy(from, to, 0, 10, 0);
+```
+
+```
+// 引数の型を厳密にチェックする場合
+
+function flex_is_sum(a) {
+  var total = 0;
+
+  for(var i = 0; i < arguments.length; i++) {
+    var element = arguments[i];
+    console.debug(i + ":" + element);
+    if(!element) continue;
+
+    var n;
+    switch(typeof element) {
+      case "number": // 数値
+        n = element;
+        break;
+      case "function": // 関数
+        n = element();
+        break;
+      case "string": // 文字列の場合、数値に変換
+        n = parseFloat(element);
+        break;
+      case "boolean": // 論理値
+        if(element == true) n = 1;
+        if(element == false) n = 1;
+        break;
+      case "Object": // オブジェクト
+        if(element instanceof Array) {
+          n = flex_is_sum(element);
+        } else {
+          n = element.valueOf();
+        }
+        n = element;
+        break;
+    }
+
+    console.debug(i + ":" + n);
+    if(typeof n == "number" && !isNaN(n)) {
+      total += n;
+    } else {
+      throw new Error("sum(): can't convert ["+ element + "] to number.");
+    }
+  }
+  return total;
+}
+
+
+console.debug(flex_is_sum(1,"1",true)); // 3
+```
+
+
+### データとしての関数
+
+関数はデータとして扱える。
+
+```
+function calc(x) {
+  if(x == 0) return 1;
+  return x * calc(x-1);
+}
+
+var a = calc(3)
+console.debug(a); // 6
+
+var b = calc; // 関数を代入
+console.debug(b(4)); // 24
+
+var c = {props: calc}; // オブジェクトのプロパティに代入
+console.debug(c.props(5)); // 120
+```
+
+```
+// 関数をデータとして使用する方法
+
+function add(x, y) { return x + y; }
+function subtrat(x, y) { return x - y; }
+function multiply(x, y) { return x * y; }
+function divide(x, y) { return x / y; }
+
+function o(func, x, y) {
+  return func(x, y);
+}
+
+// (2+3) + (4*5)
+var l = o(add, 2,3);
+var r = o(multiply, 4,5);
+console.debug(o(add, l, r)); // 25
+```
+
+### メソッドとしての関数
+
+JavaScriptのメソッド：オブジェクトのプロパティに格納されているJavaScriptで、このオブジェクトを介して呼び出される関数のこと。
 
 ### 再帰
 #### calleeプロパティ
@@ -177,8 +297,8 @@ var fact_ = function(x) {
   } else {
     result = x * arguments.callee( x-1 );
   }
-    console.debug(x + " = " + result);
-    return result
+  console.debug(x + " = " + result);
+  return result
 }
 
 var result = fact_(5);
