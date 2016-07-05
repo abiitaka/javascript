@@ -22,7 +22,7 @@ console.debug(calc(2, 3)); // 6
 関数リテラルは、無名関数を定義する式。
 
 **function文は、構文上は文であり、関数名が必要。関数リテラルは、構文上は式であり、関数名が不要になる。**  
-ただし、関数リテラルで関数名を指定してもよい。
+ただし、関数リテラルに関数名を指定するこもできる。
 
 関数リテラルは、1回しか使わない関数や名前をつける必要のない関数に適している。
 
@@ -32,10 +32,12 @@ console.debug(calc(2, 3)); // 6
 function calc_f(x) {return x * x};
 console.debug(calc_f(5)); // 25
 
+
 // 関数リテラル
 
 var calc_r = function(x) {return x * x;}
 console.debug(calc_r(5)); // 25
+
 
 // 関数リテラルに名前をつける
 
@@ -90,7 +92,7 @@ console.debug(toArray(1)); Array [ 1, undefined ]
 argumentsプロパティでアクセスする。
 
 ```
-// argumentsオブジェクトで引数を確認する
+// argumentsプロパティで引数を確認する
 
 function f(a, b) {
   console.debug(arguments.length);
@@ -254,7 +256,254 @@ console.debug(o(add, l, r)); // 25
 
 ### メソッドとしての関数
 
-JavaScriptのメソッド：オブジェクトのプロパティに格納されているJavaScriptで、このオブジェクトを介して呼び出される関数のこと。
+JavaScriptのメソッド・・・オブジェクトのプロパティに格納されているJavaScriptで、このオブジェクトを介して呼び出される関数のこと。
+
+```
+function add(a, b) {
+  return a + b;
+}
+
+var o = {m: null };
+
+o.m = add; // addメソッド
+console.debug(o.m(1, 2)); // 3
+```
+
+**メソッドには、重要なポイントが一つある。**  
+**メソッドを呼び出すときに使用したオブジェクトが、メソッド本体の中でthisキーワードの値になる。**
+
+```
+var calc = {
+  x: 0,
+  y: 0,
+  add: function() {
+    return this.x + this.y;
+  }
+};
+
+calc.x = 1;
+calc.y = 2;
+console.debug(calc.add()); // 3
+```
+
+#### thisキーワード
+
+メソッドとして使用する関数には、通常の引数とは別に、呼び出すときに指定したオブジェクト自身が渡される。
+
+注意点
+* 関数がメソッドではなく関数として呼び出された場合、thisキーワードはグローバルオブジェクトを参照する。
+* メソッドとして呼び出された関数の中に入れ子にされた別の関数が関数として呼び出された場合も、グローバルオブジェクトを参照する。
+
+### 関数のプロパティとメソッド
+
+#### length
+
+* arguments.length
+* 関数のlength＝引数.callee.length
+
+argumentsのlengthは、関数に渡された引数の個数。
+関数のlengthは、関数に渡されるはずの引数の個数。つまり、引数リストに宣言された引数の個数
+
+```
+function check(args) {
+  var actual = args.length;
+  var expected = args.callee.length;
+  console.debug("args.length:" + args.length);
+  console.debug("args.callee.length:" + args.callee.length);
+
+  if(actual != expected) {
+    throw new Error("Wrong number of arguments: expected:" + expected + ";actually passed " + actual);
+  }
+}
+
+var add = function(x, y, z) {
+  check(arguments);
+  return x + y + z;
+}
+
+// 宣言した引数と渡した引数の数が同じ場合
+console.debug(add(1, 2, 3)); // 6
+
+// 宣言した引数と渡した引数の数が異なる場合
+console.debug(add(1, 2)); // Exception: Error: Wrong number of arguments: expected:3;actually passed 2
+```
+
+#### 自分専用の関数プロパティの定義
+
+自分専用の関数プロパティを宣言すると、関数内部からしか使用させない構成にすることができる。
+ただし、外部から値が変更されることを考慮しなければならない。  
+以下のいずれのパターンも、外部から値を変更することができる。
+
+```
+// グルーバル変数をもつ
+// グローバル変数のため、変数名が重複する可能性がある
+var g_counter = 0;
+
+function g_calc() {
+  return g_counter++;
+}
+
+console.debug("g_counter:" + g_calc()); // 0
+console.debug("g_counter:" + g_calc()); // 1
+console.debug("g_counter:" + g_calc()); // 2
+console.debug("g_counter:" + g_calc()); // 3
+
+// Function関数内に変数をもつ
+f_calc.f_counter=0;
+
+function f_calc() {
+  return f_counter++;
+}
+
+console.debug("f_counter:" + f_calc()); // 0
+console.debug("f_counter:" + f_calc()); // 1
+console.debug("f_counter:" + f_calc()); // 2
+console.debug("f_counter:" + f_calc()); // 3
+```
+
+#### applyメソッドとcallメソッド
+
+あるオブジェクトのメソッドであるかのうように関数を呼び出すことができる。
+
+```
+var add = function(x, y) {
+  return x + y;
+}
+
+var calc = {
+  minus : function(x, y) {
+    return x- y;
+  }
+}
+
+console.debug(add.call(calc, 10, 3)); // 13
+```
+
+以下と同じ意味。
+
+```
+calc.add = add;
+console.debug(calc.add(10, 3)); // 13
+delete calc.add;
+```
+
+### ユーティリティ関数
+
+```
+// 指定したパラメータのプロパティ名を配列で返却するユーティリティ
+
+function getPropertyNames(/* オブジェクト */obj) {
+  var result = [];
+  for(name in obj) result.push(name);
+  return result;
+}
+
+var p = {x: 1, y: 2};
+console.debug(getPropertyNames(p)); //Array [ "x", "y" ]
+```
+
+```
+// from から to にプロパティをコピーするユーティリティ
+// to がnullの場合は、新たにオブジェクトを生成する
+
+function copyProperties(/* オブジェクト */from, /* オブジェクト */to) {
+  if(!to) to = {};
+  for(var p in from) to[p] = from[p];
+  return to;
+}
+
+var p = {a: 1, b: 2};
+var copy_p = copyProperties(p);
+console.debug(p); // Object { a: 1, b: 2 }
+console.debug(copy_p); // Object { x: 1, y: 2 }
+
+var to_p = {};
+console.debug(to_p); // Object {}
+
+copyProperties(copy_p, to_p);
+console.debug(to_p); // Object { x: 1, y: 2 }
+```
+
+```
+// from から to にプロパティをコピーするユーティリティ
+// to に未定義の場合、fromの値をコピーする。to の値はそのまま
+
+function copyUndefineProperties(/* Object */from, /* Object */to) {
+  for(var p in from) {
+    if(p in to) {
+      // 処理なし
+    } else {
+      to[p] = from[p];
+    }
+  }
+}
+
+var position = {x: 0, y: 0};
+var tmp = {x: 1, z: 3};
+
+copyUndefineProperties(position, tmp);
+console.debug(tmp); // Object { x: 1, z: 3, y: 0 }
+```
+
+```
+// 配列 a の各要素に対して、指定した第2引数の条件に一致する要素のみを抽出するユーティリティ
+
+function fileArray(/* Array */ a, /* 論理値を返す関数 */ predicate) {
+  var results = [];
+  var length = a.length;
+  for(var i = 0; i < length; i++) {
+    var element = a[i];
+    if(predicate(element)) results.push(element);
+  }
+  return results;
+}
+
+var gusu = function(value) {
+  if(value % 2 == 0) return true;
+  return false;
+}
+
+var numbers = [1,2,3,4,5,6,7,8,9,0];
+
+console.debug(fileArray(numbers, gusu)); // Array [ 2, 4, 6, 8, 0 ]
+```
+
+```
+// 関数を別のオブジェクトとして呼び出すユーティリティ
+
+function bindMethod(/* Object */ obj, /* Function */ func) {
+  return function() {return func.apply(obj, arguments)}
+}
+
+var position = {x: 1, y: 2}
+
+var out = function() {
+  console.debug("out call");
+}
+
+bindMethod(position, out)();
+```
+
+```
+// 呼び出し時に指定した引数のほかに、あらかじめ指定した引数も含めて、関数funcを呼び出す関数を返す
+// 　＝カリー化
+function  bindArguments(/* Function */ func /*, 予め引数を指定する... */) {
+  var boundArgs = arguments;
+  return function() {
+    var args = [];
+    for(var i = 1; i < boundArgs.length; i++) args.push(boundArgs[i]);
+    for(var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+
+    return func.apply(this, args);
+  }
+}
+
+var calc = function(x, y) {
+  return x + y;
+}
+
+var bindFunc = bindArguments(calc(1,2), 3,4);
+```
 
 ### 再帰
 #### calleeプロパティ
